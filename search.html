@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>मेरा सर्च इंजन</title>
+    <!-- Google Adsense Code (Header में) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-आपका_AD_CLIENT_ID"
+     crossorigin="anonymous"></script>
+    <style>
+        /* CSS Styling */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f0f2f5;
+        }
+        .search-box {
+            width: 80%;
+            max-width: 600px;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #dfe1e5;
+            border-radius: 24px;
+            margin: 20px auto;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #results {
+            margin: 30px auto;
+            width: 80%;
+            text-align: left;
+        }
+        .ad-container {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 मेरा सर्च इंजन</h1>
+    
+    <!-- Ads Section -->
+    <div class="ad-container">
+        <!-- यहां AdSense Code Paste करें -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-आपका_AD_CLIENT_ID"
+             data-ad-slot="आपका_AD_SLOT_ID"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <input type="text" class="search-box" id="searchInput" placeholder="कुछ खोजें...">
+    <button onclick="performSearch()">खोजें</button>
+    
+    <div id="results"></div>
+
+    <script>
+        // Google Custom Search API का उपयोग करें
+        const API_KEY = 'AIzaSyCNZBETUQHUHQFLvKGRPtkXRf0AFwUTW3U';
+        const SEARCH_ENGINE_ID = 'f0fa472e912ee459c';
+
+        async function performSearch() {
+            const query = document.getElementById('searchInput').value;
+            const url = `https://www.googleapis.com/customsearch/v1?q=${query}&key=${API_KEY}&cx=${SEARCH_ENGINE_ID}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                displayResults(data.items);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayResults(items) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            items.forEach(item => {
+                resultsDiv.innerHTML += `
+                    <div class="result-item">
+                        <h3><a href="${item.link}">${item.title}</a></h3>
+                        <p>${item.snippet}</p>
+                    </div>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
